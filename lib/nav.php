@@ -34,7 +34,7 @@ class Roots_Nav_Walker extends Walker_Nav_Menu {
       $item_html = preg_replace('/<a[^>]*>(.*)<\/a>/iU', '$1', $item_html);
     }
 
-    $item_html = apply_filters('roots_wp_nav_menu_item', $item_html);
+    $item_html = apply_filters('roots/wp_nav_menu_item', $item_html);
     $output .= $item_html;
   }
 
@@ -74,13 +74,15 @@ add_filter('nav_menu_item_id', '__return_null');
  * Use Roots_Nav_Walker() by default
  */
 function roots_nav_menu_args($args = '') {
+  $roots_nav_menu_args = array();
+
   $roots_nav_menu_args['container'] = false;
 
   if (!$args['items_wrap']) {
     $roots_nav_menu_args['items_wrap'] = '<ul class="%2$s">%3$s</ul>';
   }
 
-  if (current_theme_supports('bootstrap-top-navbar') && !$args['depth']) {
+  if (!$args['depth']) {
     $roots_nav_menu_args['depth'] = 2;
   }
 
