@@ -63,12 +63,12 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        separator: ';',
+        separator: ';'
       },
       dist: {
         src: [jsFileList],
-        dest: 'assets/js/scripts.js',
-      },
+        dest: 'assets/js/scripts.js'
+      }
     },
     uglify: {
       dist: {
