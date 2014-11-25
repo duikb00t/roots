@@ -5,23 +5,25 @@
  *
  * PHP Version 5.5+
  *
- * @category Fingerpaint
- * @package  Themes
- * @author   Kevin Fodness <kfodness@fingerpaintmarketing.com>
- * @license  Copyright 2014 Fingerpaint. All rights reserved.
+ * @category Themes
+ * @package  Theme_Base
+ * @author   Fingerpaint Developers <devs@fingerpaintmarketing.com>
+ * @license  GPLv3
  * @link     http://fingerpaintmarketing.com
+ * @version  1.1.0
  */
 
 /**
  * A base class to provide reusable functionality for theme objects.
  *
- * @category Fingerpaint
- * @package  Themes
- * @author   Kevin Fodness <kfodness@fingerpaintmarketing.com>
- * @license  Copyright 2014 Fingerpaint. All rights reserved.
+ * @category Themes
+ * @package  Theme_Base
+ * @author   Fingerpaint Developers <devs@fingerpaintmarketing.com>
+ * @license  GPLv3
  * @link     http://fingerpaintmarketing.com
  */
 class Theme_Base {
+
 	/**
 	 * A variable to store cached results of computations for this session.
 	 *

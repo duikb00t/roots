@@ -5,24 +5,25 @@
  *
  * PHP Version 5.5+
  *
- * @category Wordpress
- * @package  Widgets
- * @author   Kevin Fodness <kevin@kevinfodness.com>, Beau Watson <bwatson@fingerpaintmarketing.com>
+ * @category Widgets
+ * @package  Widget_Base
+ * @author   Fingerpaint Developers <devs@fingerpaintmarketing.com>
  * @license  GPLv3
- * @link     http://www.kevinfodness.com
- * @version  1.0.2
+ * @link     http://fingerpaintmarketing.com
+ * @version  1.1.0
  */
 
 /**
  * A widget base class for handling configurable widgets.
  *
- * @category Wordpress
- * @package  Widgets
- * @author   Kevin Fodness <kevin@kevinfodness.com>, Beau Watson <bwatson@fingerpaintmarketing.com>
+ * @category Widgets
+ * @package  Widget_Base
+ * @author   Fingerpaint Developers <devs@fingerpaintmarketing.com>
  * @license  GPLv3
- * @link     http://www.kevinfodness.com
+ * @link     http://fingerpaintmarketing.com
  */
 class Widget_Base extends WP_Widget {
+
 	/**
 	 * Fields listing. To be overriden by child class.
 	 *
