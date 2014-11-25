@@ -63,12 +63,12 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        separator: ';'
+        separator: ';',
       },
       dist: {
         src: [jsFileList],
-        dest: 'assets/js/scripts.js'
-      }
+        dest: 'assets/js/scripts.js',
+      },
     },
     uglify: {
       dist: {
@@ -110,6 +110,22 @@ module.exports = function(grunt) {
         parseFiles: true
       }
     },
+    version: {
+      default: {
+        options: {
+          format: true,
+          length: 32,
+          manifest: 'assets/manifest.json',
+          querystring: {
+            style: 'roots_css',
+            script: 'roots_js'
+          }
+        },
+        files: {
+          'lib/scripts.php': 'assets/{css,js}/{main,scripts}.min.{css,js}'
+        }
+      }
+    },
     watch: {
       less: {
         files: [
@@ -129,7 +145,7 @@ module.exports = function(grunt) {
         // Browser live reloading
         // https://github.com/gruntjs/grunt-contrib-watch#live-reloading
         options: {
-          livereload: true
+          livereload: false
         },
         files: [
           'assets/css/main.css',
@@ -156,6 +172,7 @@ module.exports = function(grunt) {
     'less:build',
     'autoprefixer:build',
     'uglify',
-    'modernizr'
+    'modernizr',
+    'version'
   ]);
 };
