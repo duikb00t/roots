@@ -31,3 +31,7 @@ foreach ($roots_includes as $file) {
   require_once $filepath;
 }
 unset($file, $filepath);
+
+/* Theme class. */
+require_once 'lib/classes/class.Site_Theme.php';
+$theme = new Site_Theme();
