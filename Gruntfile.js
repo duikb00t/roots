@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 				options: {
 					compress         : true,
 					sourceMap        : true,
-					sourceMapFilename: 'assets/css/main.css.map',
+					sourceMapFilename: 'assets/css/main.min.css.map',
 					sourceMapRootpath: '/app/themes/roots/'
 				}
 			}
@@ -75,7 +75,7 @@ module.exports = function (grunt) {
 						prev: 'assets/css/'
 					}
 				},
-				src    : 'assets/css/main.css'
+				src    : 'assets/css/main.min.css'
 			}
 		},
 		modernizr   : {
@@ -133,7 +133,7 @@ module.exports = function (grunt) {
 					livereload: true
 				},
 				files  : [
-					'assets/css/main.css',
+					'assets/css/main.min.css',
 					'assets/js/scripts.js',
 					'templates/*.php',
 					'*.php'
