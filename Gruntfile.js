@@ -1,10 +1,9 @@
 'use strict';
 module.exports = function (grunt) {
-	// Load all tasks
+// Load all tasks
 	require('load-grunt-tasks')(grunt);
-	// Show elapsed time
+// Show elapsed time
 	require('time-grunt')(grunt);
-
 	var jsFileList = [
 		'assets/vendor/bootstrap/js/transition.js',
 		'assets/vendor/bootstrap/js/alert.js',
@@ -21,7 +20,6 @@ module.exports = function (grunt) {
 		'assets/js/plugins/*.js',
 		'assets/js/_*.js'
 	];
-
 	grunt.initConfig({
 		jshint      : {
 			options: {
@@ -35,6 +33,21 @@ module.exports = function (grunt) {
 			]
 		},
 		less        : {
+			dev  : {
+				files  : {
+					'assets/css/main.css': [
+						'assets/less/main.less'
+					]
+				},
+				options: {
+					compress         : false,
+					// LESS source map
+					// To enable, set sourceMap to true and update sourceMapRootpath based on your install
+					sourceMap        : true,
+					sourceMapFilename: 'assets/css/main.css.map',
+					sourceMapRootpath: '/app/themes/roots/'
+				}
+			},
 			build: {
 				files  : {
 					'assets/css/main.min.css': [
@@ -42,10 +55,7 @@ module.exports = function (grunt) {
 					]
 				},
 				options: {
-					compress         : true,
-					sourceMap        : true,
-					sourceMapFilename: 'assets/css/main.min.css.map',
-					sourceMapRootpath: '/app/themes/roots/'
+					compress: true
 				}
 			}
 		},
@@ -69,13 +79,16 @@ module.exports = function (grunt) {
 			options: {
 				browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12']
 			},
-			build  : {
+			dev    : {
 				options: {
 					map: {
 						prev: 'assets/css/'
 					}
 				},
-				src    : 'assets/css/main.min.css'
+				src    : 'assets/css/main.css'
+			},
+			build  : {
+				src: 'assets/css/main.min.css'
 			}
 		},
 		modernizr   : {
@@ -117,14 +130,14 @@ module.exports = function (grunt) {
 					'assets/less/*.less',
 					'assets/less/**/*.less'
 				],
-				tasks: ['less:build', 'autoprefixer:build', 'uglify', 'version']
+				tasks: ['less:dev', 'autoprefixer:dev', 'less:build', 'autoprefixer:build']
 			},
 			js        : {
 				files: [
 					jsFileList,
 					'<%= jshint.all %>'
 				],
-				tasks: ['jshint', 'uglify', 'modernizr', 'version']
+				tasks: ['jshint', 'concat', 'uglify']
 			},
 			livereload: {
 				// Browser live reloading
@@ -133,7 +146,7 @@ module.exports = function (grunt) {
 					livereload: true
 				},
 				files  : [
-					'assets/css/main.min.css',
+					'assets/css/main.css',
 					'assets/js/scripts.js',
 					'templates/*.php',
 					'*.php'
@@ -141,12 +154,28 @@ module.exports = function (grunt) {
 			}
 		}
 	});
-
 	// Register tasks
 	grunt.registerTask('default', [
+		'dev'
+	]);
+	grunt.registerTask('dev', [
 		'jshint',
+		'less:dev',
+		'autoprefixer:dev',
 		'less:build',
 		'autoprefixer:build',
+		'concat',
+		'uglify',
+		'modernizr',
+		'version'
+	]);
+	grunt.registerTask('build', [
+		'jshint',
+		'less:dev',
+		'autoprefixer:dev',
+		'less:build',
+		'autoprefixer:build',
+		'concat',
 		'uglify',
 		'modernizr',
 		'version'
