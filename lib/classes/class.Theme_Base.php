@@ -196,6 +196,106 @@ SQL;
 	}
 
 	/**
+	 * A function to return the appropriate FontAwesome class based on a file path.
+	 *
+	 * @param string $filepath The filepath to extract the extension from.
+	 *
+	 * @return string The FontAwesome class to use.
+	 */
+	public function get_fa_file_icon( $filepath ) {
+		switch ( strtolower( pathinfo( $filepath, PATHINFO_EXTENSION ) ) ) {
+			case 'csv':
+			case 'xlr':
+			case 'xls':
+			case 'xlsx':
+				return 'fa-file-excel-o';
+			case 'pdf':
+				return 'fa-file-pdf-o';
+			case 'doc':
+			case 'docx':
+			case 'odt':
+			case 'pages':
+			case 'rtf':
+			case 'wpd':
+			case 'wps':
+				return 'fa-file-word-o';
+			case '7z':
+			case '7zip':
+			case 'cbr':
+			case 'deb':
+			case 'gz':
+			case 'pkg':
+			case 'rar':
+			case 'rpm':
+			case 'sitx':
+			case 'tar':
+			case 'zip':
+			case 'zipx':
+				return 'fa-file-archive-o';
+			case '3dm':
+			case '3ds':
+			case 'ai':
+			case 'bmp':
+			case 'dds':
+			case 'eps':
+			case 'gif':
+			case 'indd':
+			case 'jpeg':
+			case 'jpg':
+			case 'max':
+			case 'obj':
+			case 'pct':
+			case 'png':
+			case 'ps':
+			case 'psd':
+			case 'svg':
+			case 'tga':
+			case 'thm':
+			case 'tif':
+			case 'tiff':
+			case 'yuv':
+				return 'fa-file-image-o';
+			case 'aac':
+			case 'aif':
+			case 'iff':
+			case 'm3u':
+			case 'm4a':
+			case 'mid':
+			case 'mp3':
+			case 'mpa':
+			case 'ra':
+			case 'wav':
+			case 'wma':
+				return 'fa-file-audio-o';
+			case 'txt':
+				return 'fa-file-text-o';
+			case 'key':
+			case 'odp':
+			case 'pps':
+			case 'ppt':
+			case 'pptx':
+				return 'fa-file-powerpoint-o';
+			case '3g2':
+			case '3gp':
+			case 'asf':
+			case 'asx':
+			case 'avi':
+			case 'flv':
+			case 'm4v':
+			case 'mov':
+			case 'mp4':
+			case 'mpg':
+			case 'srt':
+			case 'swf':
+			case 'vob':
+			case 'wmv':
+				return 'fa-file-video-o';
+			default:
+				return 'fa-file-o';
+		}
+	}
+
+	/**
 	 * A function to print an option element, including selecting the active option.
 	 *
 	 * @param string $value   The value to use in the option element.
