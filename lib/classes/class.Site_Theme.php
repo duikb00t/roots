@@ -92,7 +92,7 @@ class Site_Theme extends Theme_Base {
 	public function action_wp_enqueue_scripts() {
 
 		/* Store the theme path for use in Roots scripts. */
-		wp_localize_script( 'roots_scripts', 'themes_path', substr( get_template_directory(), strpos( get_template_directory(), 'wp-content/' ) ) );
+		wp_localize_script( 'roots_js', 'themes_path', substr( get_template_directory(), strpos( get_template_directory(), 'wp-content/' ) ) );
 	}
 
 	/**
