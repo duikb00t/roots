@@ -106,6 +106,7 @@ class Widget_Base extends WP_Widget {
 	protected function print_field( $key, $data ) {
 
 		/* Switch to construct HTML for the field itself. */
+		$field = '';
 		switch ( $this->fields[ $key ]['type'] ) {
 			case 'select':
 				$options = '';
@@ -135,7 +136,6 @@ HTML;
 HTML;
 				break;
 			case 'checkbox':
-				$field = '';
 				if ( ! empty( $this->fields[ $key ]['values'] ) && is_array( $this->fields[ $key ]['values'] ) ) {
 					$values = unserialize( base64_decode( $data['value'] ) );
 					foreach ( $this->fields[ $key ]['values'] as $value => $name ) {
@@ -237,6 +237,7 @@ HTML;
 	public function update( $new_instance, $old_instance ) {
 
 		/* Loop through each field, sanitize, and save values. */
+		$instance = array();
 		foreach ( $this->fields as $key => $field ) {
 			if ( is_array( $new_instance[ $key ] ) ) {
 				$values = array();
