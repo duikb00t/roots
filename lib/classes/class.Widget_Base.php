@@ -10,7 +10,7 @@
  * @author   Fingerpaint Developers <devs@fingerpaintmarketing.com>
  * @license  GPLv3
  * @link     http://fingerpaintmarketing.com
- * @version  1.1.0
+ * @version  1.2.0
  */
 
 /**
@@ -35,14 +35,16 @@ class Widget_Base extends WP_Widget {
 	/**
 	 * Constructor function. Registers the widget by calling the parent constructor.
 	 *
-	 * @param string $id          The ID of the widget.
-	 * @param string $name        The name of the widget.
+	 * @param string $id The ID of the widget.
+	 * @param string $name The name of the widget.
 	 * @param string $description The description for the widget.
 	 *
 	 * @access public
 	 * @return Widget_Base
 	 */
 	public function __construct( $id, $name, $description ) {
+
+		/* Run the parent constructor with information passed to this constructor from the child class. */
 		parent::__construct(
 			$id,
 			__( $name, 'text_domain' ),
@@ -63,6 +65,8 @@ class Widget_Base extends WP_Widget {
 	 * @return array
 	 */
 	protected function get_data( $instance ) {
+
+		/* Loop through field data and compile a data array with keys and values. */
 		$data = array();
 		foreach ( $this->fields as $key => $field ) {
 
@@ -93,13 +97,14 @@ class Widget_Base extends WP_Widget {
 	/**
 	 * A function to print a field on the edit form.
 	 *
-	 * @param string $key  The key from the fields definition for this field.
-	 * @param array  $data The data array for this field.
+	 * @param string $key The key from the fields definition for this field.
+	 * @param array $data The data array for this field.
 	 *
 	 * @access protected
 	 * @return void
 	 */
 	protected function print_field( $key, $data ) {
+
 		/* Switch to construct HTML for the field itself. */
 		switch ( $this->fields[ $key ]['type'] ) {
 			case 'select':
@@ -131,31 +136,20 @@ HTML;
 				break;
 			case 'checkbox':
 				$field = '';
-				//if we have an array ofcheckboxes, loop through them
-				if ( ! empty( $this->fields[ $key ]['values'] )
-				     && is_array( $this->fields[ $key ]['values'] )
-				) {
-					//base64 decode the data, then unserialize it
+				if ( ! empty( $this->fields[ $key ]['values'] ) && is_array( $this->fields[ $key ]['values'] ) ) {
 					$values = unserialize( base64_decode( $data['value'] ) );
-					$data["title"] .= '</label>';
-					//looping through the checkboxes
 					foreach ( $this->fields[ $key ]['values'] as $value => $name ) {
-						// if the current instance's value is in the values array, set it as checked
 						$checked = ( ! empty( $values ) && in_array( $value, $values ) ) ? 'checked="checked"' : '';
-
-						//prep the HTML. We're cheating and closing the label early to keep the entire checkbox group from getting encloded
-						//  in the label. Then, wrap a label around the checkbox.
-						$data['title'] .= <<<HTML
-<br><label><input id="{$data['field_id']}" value="{$value}" name="{$data['field_name']}[]" type="checkbox" {$checked} /> {$name}</label>
+						$field .= <<<HTML
+</label><br/><label><input id="{$data['field_id']}" value="{$value}" name="{$data['field_name']}[]" type="checkbox" {$checked} /> {$name}
 HTML;
 					}
 				} else {
-					//if it's not an array, simply write it out
 					$checked       = ( ! empty( $data['value'] ) ) ? 'checked="checked"' : '';
+					$name          = substr( $data['title'], 0, - 1 );
 					$data['title'] = <<<HTML
-<input id="{$data['field_id']}" name="{$data['field_name']}" type="checkbox" {$checked} />
-HTML
-					                 . substr( $data['title'], 0, - 1 );
+<input id="{$data['field_id']}" name="{$data['field_name']}" type="checkbox" {$checked} /> {$name}
+HTML;
 				}
 
 				break;
@@ -192,6 +186,7 @@ HTML;
 	 * @return void
 	 */
 	public function admin_print_scripts() {
+
 		/* Compute URL of supplemental JS file. */
 		$js_url        = get_template_directory_uri();
 		$template_base = substr( $js_url, strpos( $js_url, '/', 8 ) );
@@ -222,6 +217,8 @@ HTML;
 	 * @return void
 	 */
 	public function form( $instance ) {
+
+		/* Loop through data for this instance and print each field according to the settings. */
 		$data = $this->get_data( $instance );
 		foreach ( $data as $key => $field ) {
 			$this->print_field( $key, $field );
@@ -238,16 +235,17 @@ HTML;
 	 * @return array  The modified instance data.
 	 */
 	public function update( $new_instance, $old_instance ) {
+
+		/* Loop through each field, sanitize, and save values. */
 		foreach ( $this->fields as $key => $field ) {
-			if ( ! empty( $new_instance[ $key ] ) && ! is_array( $new_instance[ $key ] ) ) {
-				$instance[ $key ] = strip_tags( $new_instance[ $key ] );
-			} else {
+			if ( is_array( $new_instance[ $key ] ) ) {
 				$values = array();
 				foreach ( $new_instance[ $key ] as $value ) {
 					$values[] = strip_tags( $value );
 				}
-				// base64_encode (to prevent glitches) and serialize the values
 				$instance[ $key ] = base64_encode( serialize( $values ) );
+			} else {
+				$instance[ $key ] = strip_tags( $new_instance[ $key ] );
 			}
 		}
 
