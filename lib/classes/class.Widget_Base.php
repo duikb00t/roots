@@ -186,16 +186,8 @@ HTML;
 	 * @return void
 	 */
 	public function admin_print_scripts() {
-
-		/* Compute URL of supplemental JS file. */
-		$js_url        = get_template_directory_uri();
-		$template_base = substr( $js_url, strpos( $js_url, '/', 8 ) );
-		$js_url .= substr( __DIR__, strpos( __DIR__, $template_base ) + strlen( $template_base ) ) . '/widget_base.js';
-
-		/* Register and enqueue scripts. */
 		wp_enqueue_media();
-		wp_register_script( 'widget-base', $js_url );
-		wp_enqueue_script( 'widget-base' );
+		wp_enqueue_script( 'widget-base', get_template_directory_uri() . '/assets/js/widget_base.js' );
 	}
 
 	/**
