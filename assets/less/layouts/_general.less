@@ -7,6 +7,26 @@
   .sidebar-primary & {
     .make-sm-column(@main-sm-columns - @sidebar-sm-columns);
   }
+
+
+  // Differently colored bullets from text
+  ul {
+    padding: 0 0 0 15px;
+    list-style-type: none;
+    li {
+      position: relative;
+      &:before {
+        content: '\b7';
+        position: absolute;
+        right: 100%;
+        font-size: 50px;
+        line-height: 25px;
+        padding: 0 5px 0 0;
+        color: @brand-primary;
+      }
+    }
+  }
+
 }
 
 
@@ -25,20 +45,3 @@
   }
 }
 
-// Differently colored bullets from text
-ul {
-  padding: 0 0 0 15px;
-  list-style-type: none;
-  li {
-    position: relative;
-    &:before {
-      content: '\b7';
-      position: absolute;
-      right: 100%;
-      font-size: 50px;
-      line-height: 25px;
-      padding: 0 5px 0 0;
-      color: @brand-primary;
-    }
-  }
-}
