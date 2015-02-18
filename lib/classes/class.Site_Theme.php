@@ -42,6 +42,7 @@ class Site_Theme extends Theme_Base {
 		add_action( 'wp_enqueue_scripts', array( $this, 'action_wp_enqueue_scripts' ), 1000 );
 
 		/* Register filter hooks. */
+		add_filter( 'gform_confirmation', array( $this, 'filter_gform_confirmation' ), 10, 4 );
 		add_filter( 'gform_tabindex', array( $this, 'filter_gform_tabindex' ), 10, 2 );
 	}
 
@@ -100,10 +101,58 @@ class Site_Theme extends Theme_Base {
 	}
 
 	/**
+	 * A filter for the confirmation to add custom JavaScript to fire Google Analytics events.
+	 *
+	 * @param mixed $confirmation The confirmation message or array to be filtered.
+	 * @param array $form The current form.
+	 * @param array $lead The current entry array.
+	 * @param bool $is_ajax Whether the form is configured to be submitted via AJAX or not.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function filter_gform_confirmation( $confirmation, $form, $lead, $is_ajax ) {
+
+		/* If the confirmation is not configured to be text, bail out. */
+		if ( is_array( $confirmation ) ) {
+			return $confirmation;
+		}
+
+		/* Set default form values for Google Analytics events. */
+		$events = array(
+			array(
+				'action' => 'Submitted',
+				'label'  => $form['title'],
+			),
+		);
+
+		/* Override or augment default event values in specific cases, if needed. */
+		switch ( $form['id'] ) {
+		}
+
+		/* Add Google Analytics tracking snippet to confirmation message dynamically. */
+		$ga_function_calls = '';
+		foreach ( $events as $event ) {
+			$ga_function_calls .= <<<JAVASCRIPT
+ga('send', 'event', 'Forms', '{$event['action']}', '{$event['label']}');
+
+JAVASCRIPT;
+		}
+
+		return $confirmation . <<<HTML
+<script type="text/javascript">
+	if (typeof ga === 'function') {
+		{$ga_function_calls}
+	}
+</script>
+HTML;
+	}
+
+	/**
 	 * A filter function for the Gravity Forms tabindex.
 	 *
-	 * @param int          $tabindex What Gravity Forms wants to use as the tab index.
-	 * @param RGFormsModel $form     The form object.
+	 * @param int $tabindex What Gravity Forms wants to use as the tab index.
+	 * @param RGFormsModel $form The form object.
 	 *
 	 * @return bool False to disable tabindex completely.
 	 */
