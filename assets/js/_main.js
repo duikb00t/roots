@@ -24,6 +24,18 @@
             init: function () {
                 // JavaScript to be fired on all pages
 
+                // Function to enable L1 navigation dropdown item links
+                // Tested on bootstrap 3.3.1
+                $('#menu-primary-navigation .dropdown').on('show.bs.dropdown', function (e) {
+                    e.preventDefault();
+                });
+
+                // requires .videoWrapper style
+                // change static sized iframe video to responsive sized ( add checks to apply for any other than Youtube)
+                if($("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").length){
+                    $("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").removeAttr('height').removeAttr('width').wrap( "<div class='videoWrapper'></div>" );
+                }
+              
                 // Add Google Analytics plugin to Wistia videos.
                 // UNCOMMENT THIS SECTION IF USING WISTIA
                 //wistiaEmbeds.onFind(function(video) {

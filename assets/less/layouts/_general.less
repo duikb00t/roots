@@ -7,4 +7,41 @@
   .sidebar-primary & {
     .make-sm-column(@main-sm-columns - @sidebar-sm-columns);
   }
+
+
+  // Differently colored bullets from text
+  ul {
+    padding: 0 0 0 15px;
+    list-style-type: none;
+    li {
+      position: relative;
+      &:before {
+        content: '\b7';
+        position: absolute;
+        right: 100%;
+        font-size: 50px;
+        line-height: 25px;
+        padding: 0 5px 0 0;
+        color: @brand-primary;
+      }
+    }
+  }
+
 }
+
+
+// Responsive video - common js function dependent on .videoWrapper & sub iframe style
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
