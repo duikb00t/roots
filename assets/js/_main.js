@@ -32,10 +32,10 @@
 
                 // requires .videoWrapper style
                 // change static sized iframe video to responsive sized ( add checks to apply for any other than Youtube)
-                if($("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").length){
-                    $("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").removeAttr('height').removeAttr('width').wrap( "<div class='videoWrapper'></div>" );
+                if ($("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").length) {
+                    $("iframe[src^='http://www.youtube.com'], iframe[src^='https://www.youtube.com']").removeAttr('height').removeAttr('width').wrap("<div class='videoWrapper'></div>");
                 }
-              
+
                 // Add Google Analytics plugin to Wistia videos.
                 // UNCOMMENT THIS SECTION IF USING WISTIA
                 //wistiaEmbeds.onFind(function(video) {
