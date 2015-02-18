@@ -121,8 +121,9 @@ class Site_Theme extends Theme_Base {
 		/* Set default form values for Google Analytics events. */
 		$events = array(
 			array(
-				'action' => 'Submitted',
-				'label'  => $form['title'],
+				'category' => 'Forms',
+				'action'   => 'Submitted',
+				'label'    => strip_tags($form['title']),
 			),
 		);
 
@@ -133,10 +134,22 @@ class Site_Theme extends Theme_Base {
 		/* Add Google Analytics tracking snippet to confirmation message dynamically. */
 		$ga_function_calls = '';
 		foreach ( $events as $event ) {
-			$ga_function_calls .= <<<JAVASCRIPT
-ga('send', 'event', 'Forms', '{$event['action']}', '{$event['label']}');
 
-JAVASCRIPT;
+			/* Build base function call. */
+			$ga_function_calls .= "ga('send', 'event', '{$event['category']}', '{$event['action']}'";
+
+			/* If a label is specified, add it. */
+			if ( ! empty( $event['label'] ) ) {
+				$ga_function_calls .= ", '{$event['label']}'";
+			}
+
+			/* If a value is specified, add it. */
+			if ( ! empty( $event['value'] ) && is_int( $event['value'] ) ) {
+				$ga_function_calls .= ", {$event['value']}";
+			}
+
+			/* Close the function call. */
+			$ga_function_calls .= ');' . "\n";
 		}
 
 		return $confirmation . <<<HTML
