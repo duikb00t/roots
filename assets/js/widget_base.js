@@ -6,7 +6,7 @@ jQuery(document).ready(function () {
         wp.media.editor.send.attachment = function (props, attachment) {
             $this.siblings('input[type="hidden"]').val(attachment.id);
             $this.closest('.widget-content').siblings().find('.widget-control-save').click();
-        }
+        };
         wp.media.editor.open($this);
         return false;
     });
