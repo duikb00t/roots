@@ -1,0 +1,76 @@
+// Responsive tables works in conjunction with JS function
+table{
+// table:not(.crayon-table){ // to exclude tables use :not()
+	border: 0;
+	@media (min-width: @screen-sm-min) {
+		border: 1px solid #ccc;
+	}
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	thead {
+		display: none;
+		@media (min-width: @screen-sm-min) {
+			display: table-header-group;
+			background-color: #c5c500;
+		}
+	}
+	tr {
+		margin-bottom: 10px;
+		display: block;
+		border: 1px solid #ddd;
+		@media (min-width: @screen-sm-min) {
+			margin-bottom: 0;
+			display: table-row;
+			padding: 5px;
+		}
+	}
+	td {
+		display: block;
+		text-align: right!important;
+		padding: 0 10px;
+		border-bottom: 1px solid #EAEAEA;
+
+		@media (min-width: @screen-sm-min) {
+			display: table-cell;
+			font-size: 13px;
+			border-bottom: 1px dotted #ccc;
+			padding: 5px;
+			text-align: center!important;
+			&:first-child {
+				text-align: left!important;
+			}
+		}
+
+		&:last-child {
+			border-bottom: 0;
+		}
+		&:before {
+			content: attr(data-label);
+			float: left;
+			font-weight: bold;
+			text-transform: capitalize;
+			@media (min-width: @screen-sm-min) {
+				content: none;
+				float: none;
+			}
+		}
+	}
+	thead{
+		th,td {
+			padding: 10px;
+			text-align: center;
+			text-transform: capitalize;
+			font-size: 12px;
+			letter-spacing: 1px;
+			font-weight:bold;
+			@media (min-width: @screen-sm-min) {
+				&:first-child {
+					text-align: left;
+				}
+			}
+		}
+	}
+}
